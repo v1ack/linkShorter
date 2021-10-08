@@ -1,0 +1,7 @@
+version: 1
+packages:
+  - path: "internal/db"
+    name: "db"
+    engine: "postgresql"
+    schema: "sql/schema.sql"
+    queries: "sql/query.sql"

@@ -1,0 +1,29 @@
+version: v1beta1
+name: buf.build/johan/grpc-gateway-boilerplate
+build:
+  roots:
+    - api
+lint:
+  use:
+    - PACKAGE_AFFINITY
+    - PACKAGE_SAME_DIRECTORY
+    - DIRECTORY_SAME_PACKAGE
+    - SENSIBLE
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+  rpc_allow_same_request_response: false
+  rpc_allow_google_protobuf_empty_requests: true
+  rpc_allow_google_protobuf_empty_responses: true
+  ignore:
+    - github.com
+
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+
+breaking:
+  use:
+    - FILE
+  ignore:
+    - github.com
+  ignore_unstable_packages: true
