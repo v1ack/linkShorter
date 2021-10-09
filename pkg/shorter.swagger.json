@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/shorter.Shorter/Create": {
+    "/create": {
       "post": {
         "operationId": "Shorter_Create",
         "responses": {
@@ -52,8 +52,8 @@
         ]
       }
     },
-    "/shorter.Shorter/Get": {
-      "post": {
+    "/get/{link}": {
+      "get": {
         "operationId": "Shorter_Get",
         "responses": {
           "200": {
@@ -71,12 +71,10 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "link",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/shorterGetLinkRequest"
-            }
+            "type": "string"
           }
         ],
         "tags": [
@@ -115,24 +113,22 @@
     },
     "shorterCreateLinkRequest": {
       "type": "object",
+      "example": {
+        "link": "https://github.com"
+      },
       "properties": {
         "link": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "link"
+      ]
     },
     "shorterCreateLinkResponse": {
       "type": "object",
       "properties": {
         "shortLink": {
-          "type": "string"
-        }
-      }
-    },
-    "shorterGetLinkRequest": {
-      "type": "object",
-      "properties": {
-        "link": {
           "type": "string"
         }
       }

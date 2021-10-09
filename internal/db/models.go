@@ -5,7 +5,6 @@ package db
 import ()
 
 type Link struct {
-	ID           int64
 	ShortLink    string
 	OriginalLink string
 }

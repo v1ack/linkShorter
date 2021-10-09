@@ -1,8 +1,7 @@
 package app
 
 import (
-	_ "github.com/lib/pq"
-	"github.com/v1ack/linkShorter/internal/providers"
+	"github.com/v1ack/linkShorter/internal/store"
 	desc "github.com/v1ack/linkShorter/pkg"
 )
 
@@ -11,9 +10,9 @@ type Service interface {
 }
 
 type service struct {
-	provider providers.DataProvider
+	provider store.DataStore
 }
 
-func NewService(provider providers.DataProvider) (Service, error) {
+func NewService(provider store.DataStore) (Service, error) {
 	return &service{provider: provider}, nil
 }

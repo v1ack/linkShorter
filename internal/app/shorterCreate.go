@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"errors"
-	"github.com/v1ack/linkShorter/internal"
+	"github.com/v1ack/linkShorter/internal/store"
 	desc "github.com/v1ack/linkShorter/pkg"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -29,19 +29,19 @@ func (s service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*
 		if err == nil {
 			break
 		}
-		if errors.Is(err, internal.ErrUnavailable) {
+		if errors.Is(err, store.ErrUnavailable) {
 			return nil, status.Error(codes.Unavailable, "Service unavailable")
 		}
 
 		// Any error but already exists
-		if !errors.Is(err, internal.ErrAlreadyExists) {
+		if !errors.Is(err, store.ErrAlreadyExists) {
 			return nil, err
 		}
 
 		// Get exists link
 		existsLink, err := s.provider.Get(ctx, shortLink)
 		if err != nil {
-			if errors.Is(err, internal.ErrUnavailable) {
+			if errors.Is(err, store.ErrUnavailable) {
 				return nil, status.Error(codes.Unavailable, "Service unavailable")
 			}
 			return nil, err
@@ -52,7 +52,6 @@ func (s service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*
 			break
 		}
 
-		//
 		hashiableLink += "0"
 	}
 

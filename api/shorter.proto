@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package shorter;
 
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/v1ack/linkShorter;linkShorter";
@@ -13,11 +15,27 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service Shorter {
-    rpc Create(CreateLinkRequest) returns (CreateLinkResponse);
-    rpc Get(GetLinkRequest) returns (GetLinkResponse);
+    rpc Create(CreateLinkRequest) returns (CreateLinkResponse) {
+        option (google.api.http) = {
+            post: "/create"
+            body: "*"
+        };
+    }
+    rpc Get(GetLinkRequest) returns (GetLinkResponse) {
+        option (google.api.http) = {
+            get: "/get/{link}"
+        };
+    }
 }
 
 message CreateLinkRequest {
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+        json_schema: {
+            required: ["link"]
+        }
+        example: "{\"link\": \"https://github.com\"}"
+    };
+
     string link = 1;
 }
 

@@ -1,11 +1,10 @@
-package providers
+package store
 
 import (
 	"context"
 )
 
-type DataProvider interface {
+type DataStore interface {
 	Get(ctx context.Context, shortLink string) (string, error)
 	Create(ctx context.Context, originalLink, shortLink string) error
-	Close()
 }

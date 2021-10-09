@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"errors"
-	"github.com/v1ack/linkShorter/internal"
+	"github.com/v1ack/linkShorter/internal/store"
 	desc "github.com/v1ack/linkShorter/pkg"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -19,10 +19,10 @@ func (s service) Get(ctx context.Context, request *desc.GetLinkRequest) (*desc.G
 	if err == nil {
 		return &desc.GetLinkResponse{OriginalLink: originalLink}, nil
 	}
-	if errors.Is(err, internal.ErrUnavailable) {
+	if errors.Is(err, store.ErrUnavailable) {
 		return nil, status.Error(codes.Unavailable, "Service unavailable")
 	}
-	if errors.Is(err, internal.ErrNotFound) {
+	if errors.Is(err, store.ErrNotFound) {
 		return nil, status.Error(codes.NotFound, "Not found")
 	}
 	return nil, err
