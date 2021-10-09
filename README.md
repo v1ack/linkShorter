@@ -18,7 +18,15 @@
 
 `sqlc` - кодогенерация из миграций и sql
 
-`grpc-gateway` - кодогенерация grpc, http, openapi из proto
+`grpc-gateway` - кодогенерация gRPC, HTTP, openAPI из proto
+
+### Штуки всякие
+
+`pkg/shorter.swagger.json` - openAPI
+
+`api/shorter.proto` - proto
+
+`ghcr.io/v1ack/linkshorter:master` - docker image
 
 ### ТЗ
 

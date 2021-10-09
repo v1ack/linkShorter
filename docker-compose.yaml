@@ -1,13 +1,15 @@
 version: "3.9"
 services:
   app:
-#    image:
+    depends_on:
+      - postgres
+    image: ghcr.io/v1ack/linkshorter:master
     ports:
       - "10000:10000"
-      - "10001:10001"
+      - "11000:11000"
     environment:
       GRPC_PORT: 10000
-      HTTP_PORT: 10001
+      HTTP_PORT: 11000
       DB_CONNECTION: "dbname=shorter password=admin user=admin sslmode=disable host=postgres"
   postgres:
     image: postgres:13
