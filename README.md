@@ -2,6 +2,12 @@
 
 ### grpc & http сервис преобразования ссылок
 
+### Запуск
+
+`ghcr.io/v1ack/linkshorter:master` - docker image
+
+Миграции накатываются при запуске
+
 #### Переменные окружения
 
 |key|default|
@@ -12,21 +18,31 @@
 
 Если `DB_CONNECTION` не указывается то используется inMemory хранилище
 
-### Зависимости
-
-`goose` - миграции
-
-`sqlc` - кодогенерация из миграций и sql
-
-`grpc-gateway` - кодогенерация gRPC, HTTP, openAPI из proto
-
-### Штуки всякие
+#### API
 
 `pkg/shorter.swagger.json` - openAPI
 
 `api/shorter.proto` - proto
 
-`ghcr.io/v1ack/linkshorter:master` - docker image
+### Разработка
+
+Создание миграции бд
+
+```shell
+goose -dir sql/migrations create <migration_name> sql
+```
+
+При изменении схем, как и при обновлении sql запросов необходимо запускать sqlc для генерации go из sql.
+
+```shell
+make generate-sqlc
+```
+
+Для кодогенерации из proto
+
+```shell
+make generate-grpc-gateway
+```
 
 ### ТЗ
 

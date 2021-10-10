@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s service) Get(ctx context.Context, request *desc.GetLinkRequest) (*desc.GetLinkResponse, error) {
+func (s *service) Get(ctx context.Context, request *desc.GetLinkRequest) (*desc.GetLinkResponse, error) {
 	if request.Link == "" {
 		return nil, status.Error(codes.InvalidArgument, "Bad request")
 	}
@@ -20,10 +20,10 @@ func (s service) Get(ctx context.Context, request *desc.GetLinkRequest) (*desc.G
 		return &desc.GetLinkResponse{OriginalLink: originalLink}, nil
 	}
 	if errors.Is(err, store.ErrUnavailable) {
-		return nil, status.Error(codes.Unavailable, "Service unavailable")
+		return nil, status.Error(codes.Unavailable, store.ErrUnavailable.Error())
 	}
 	if errors.Is(err, store.ErrNotFound) {
-		return nil, status.Error(codes.NotFound, "Not found")
+		return nil, status.Error(codes.NotFound, store.ErrNotFound.Error())
 	}
 	return nil, err
 }

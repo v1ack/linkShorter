@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*desc.CreateLinkResponse, error) {
+func (s *service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*desc.CreateLinkResponse, error) {
 	originalLink := request.Link
 	if originalLink == "" {
 		return nil, status.Error(codes.InvalidArgument, "Bad request")
@@ -30,7 +30,7 @@ func (s service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*
 			break
 		}
 		if errors.Is(err, store.ErrUnavailable) {
-			return nil, status.Error(codes.Unavailable, "Service unavailable")
+			return nil, status.Error(codes.Unavailable, store.ErrUnavailable.Error())
 		}
 
 		// Any error but already exists
@@ -42,7 +42,7 @@ func (s service) Create(ctx context.Context, request *desc.CreateLinkRequest) (*
 		existsLink, err := s.provider.Get(ctx, shortLink)
 		if err != nil {
 			if errors.Is(err, store.ErrUnavailable) {
-				return nil, status.Error(codes.Unavailable, "Service unavailable")
+				return nil, status.Error(codes.Unavailable, store.ErrUnavailable.Error())
 			}
 			return nil, err
 		}

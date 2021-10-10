@@ -1,5 +1,5 @@
 version: v1beta1
-name: buf.build/johan/grpc-gateway-boilerplate
+name: buf.build/v1ack/linkShorter
 build:
   roots:
     - api

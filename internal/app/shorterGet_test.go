@@ -40,7 +40,7 @@ func (t *testSuite) TestShorterGet_NotCreated() {
 	t.ErrorIs(err, store.ErrNotFound)
 
 	_, err = service.Get(ctx, &linkShorter.GetLinkRequest{Link: "00000000"})
-	t.EqualError(err, "rpc error: code = NotFound desc = Not found")
+	t.EqualError(err, "rpc error: code = NotFound desc = provider: key not found")
 }
 
 func (t *testSuite) TestShorterGet_BadRequest() {
